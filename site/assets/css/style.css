@@ -20,15 +20,25 @@
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; font-size: 100%; /* 16px base — WCAG AAA minimum */ }
+html {
+  scroll-behavior: smooth;
+  -webkit-scroll-behavior: smooth;
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%; /* iOS Safari zoom fix */
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 body {
   font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
-  font-size: 1.2rem;     /* 16px — yaşlı dostu minimum */
-  line-height: 1.6;    /* WCAG AAA: min 1.5 line-height */
-  letter-spacing: 0.01em; /* okunabilirlik */
+  font-size: 1.2rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;   /* macOS/iOS */
+  -moz-osx-font-smoothing: grayscale;    /* Firefox macOS */
+  text-rendering: optimizeLegibility;     /* tüm platformlar */
 }
 a { color: inherit; text-decoration: none; }
 
@@ -1287,19 +1297,111 @@ canvas#morphCanvas.interactive { pointer-events: auto; }
   color: var(--muted);
 }
 
+/* ============================================================
+   MOBILE-FIRST RESPONSIVE
+   ============================================================ */
+/* ============================================================
+   MOBILE-FIRST RESPONSIVE
+   Sidebar her zaman sol tarafta — sadece daraltılır, kaybolmaz.
+   320px (iPhone 5s) → 2560px+ uyumlu.
+   ============================================================ */
+
+/* Tablet: sidebar daralt */
 @media(max-width:768px){
+  .header { width: 44px; padding: 1rem 0; }
+  .logo-text { font-size: 0.6rem; }
+  .lang-switch { font-size: 0.6rem; padding: 0.25rem 0.35rem; }
+  .menu-button-text { font-size: 0.5rem; }
+  .menu-lines { width: 18px; }
+  .header__link { font-size: 0.6rem; }
+
+  .main-content, main.main-content { margin-left: 44px; }
+  canvas#morphCanvas { left: 44px; width: calc(100% - 44px); }
+
+  /* Journey cards */
   .j-card {
-    width: 90vw; max-width: none; min-width: 0;
-    top: auto; bottom: 5vh; transform: none;
-    left: 5vw!important; right: auto!important;
-    padding: 1.5rem;
+    width: calc(100vw - 64px); max-width: none; min-width: 0;
+    top: auto; bottom: 3vh; transform: none;
+    left: 54px!important; right: auto!important;
+    padding: 1.25rem;
   }
-  .j-card.pos-right { right: auto!important; left: 5vw!important; }
-  .shape-nav { right: 12px; gap: 0.5rem; }
-  .shape-dot { width: 8px; height: 8px; }
-  canvas#morphCanvas { left: 0; width: 100%; }
-  .main-content { margin-left: 0; }
-  .header { width: 100%; height: 50px; flex-direction: row; padding: 0 1rem; }
+  .j-card.pos-right { right: auto!important; left: 54px!important; }
+  .jc-img { height: 140px; }
+  .shape-nav { right: 10px; gap: 0.4rem; }
+  .shape-dot { width: 7px; height: 7px; }
+
+  /* Layers stack */
+  .layers-row { flex-direction: column; align-items: center; }
+  .layer-card { width: 90%; max-width: 400px; height: 320px; }
+
+  /* Mosaic 2 columns */
+  .mosaic-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+
+  /* Comparison */
+  .comparison-wrapper { aspect-ratio: 4/3; }
+
+  /* Footer 2 columns */
+  .footer-columns { grid-template-columns: repeat(2, 1fr); }
+  .footer-top-bar { flex-direction: column; align-items: flex-start; }
+}
+
+/* Phone: sidebar daha dar */
+@media(max-width:480px){
+  .header { width: 36px; }
+  .logo-text { font-size: 0.55rem; letter-spacing: 0.1em; }
+  .lang-switch { font-size: 0.55rem; padding: 0.2rem 0.3rem; }
+  .menu-button-text { display: none; }
+  .header__bottom { display: none; }
+
+  .main-content, main.main-content { margin-left: 36px; }
+  canvas#morphCanvas { left: 36px; width: calc(100% - 36px); }
+
+  .j-card {
+    width: calc(100vw - 52px);
+    left: 44px!important;
+    padding: 1rem;
+  }
+  .j-card.pos-right { left: 44px!important; }
+  .jc-img { height: 120px; }
+  .jc-stats { flex-direction: column; gap: 0.5rem; }
+
+  .hero-content { bottom: 50px; }
+  .section-header { padding: 0 0.75rem; }
+  .cs-stats { grid-template-columns: 1fr; }
+  .layer-card { height: 280px; width: 95%; }
+
+  /* Mosaic single column */
+  .mosaic-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .span-2-col, .span-2-row, .span-2-both { grid-column: span 1; grid-row: span 1; }
+  .mosaic-tile { min-height: 160px; }
+  .tile-photo { min-height: 180px; }
+
+  /* Footer single column */
+  .footer-columns { grid-template-columns: 1fr; }
+  .footer-social-icon { width: 36px; height: 36px; }
+}
+
+/* iPhone 5s / SE (320px) */
+@media(max-width:320px){
+  .header { width: 30px; }
+  .logo-text { display: none; }
+  .lang-switch { display: none; }
+
+  .main-content, main.main-content { margin-left: 30px; }
+  canvas#morphCanvas { left: 30px; width: calc(100% - 30px); }
+
+  .j-card { width: calc(100vw - 42px); left: 36px!important; }
+  .j-card.pos-right { left: 36px!important; }
+  .layer-card { width: 100%; }
+  .ticker-badge { padding: 0.5rem 0.75rem; }
+}
+
+/* Touch device optimization */
+@media(hover:none) and (pointer:coarse){
+  .comp-handle::before { width: 56px; height: 56px; }
+  .layer-card:hover { transform: none; }
+  .tile-photo:hover img { transform: none; }
+  .tile-value:hover { transform: none; }
 }
 
 /* ============================================================

@@ -66,6 +66,10 @@ gsap.registerPlugin(ScrollTrigger);
     [210,185,255],  // pastel lavender
   ];
 
+  var prevW = 0, prevH = 0;
+  var resizeTimer = null;
+  var isFirstInit = true;
+
   function resize(){
     dpr = window.devicePixelRatio || 1;
     W = canvas.parentElement.clientWidth;
@@ -75,14 +79,41 @@ gsap.registerPlugin(ScrollTrigger);
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    sampleText();
+
+    if(isFirstInit){
+      // İlk yükleme: parçacıkları oluştur
+      sampleText(true);
+      isFirstInit = false;
+      prevW = W; prevH = H;
+    }
   }
 
-  function sampleText(){
+  // Debounced resize — sadece hedef pozisyonları güncelle, animasyonu tetikleme
+  function onResize(){
+    dpr = window.devicePixelRatio || 1;
+    W = canvas.parentElement.clientWidth;
+    H = canvas.parentElement.clientHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    // Debounce: resize bittikten 300ms sonra hedefleri güncelle
+    if(resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      if(W !== prevW || H !== prevH){
+        sampleText(false); // sadece hedef güncelle, parçacık sıfırlama
+        prevW = W; prevH = H;
+      }
+    }, 300);
+  }
+
+  function sampleText(createNew){
     var offCanvas = document.createElement('canvas');
     var offCtx = offCanvas.getContext('2d');
     var text = 'ASTOR';
-    var fontSize = Math.min(W * 0.22, 320);  // %50 bigger
+    var fontSize = Math.min(W * 0.22, 320);
     offCanvas.width = W;
     offCanvas.height = H;
     offCtx.fillStyle = '#ffffff';
@@ -105,37 +136,62 @@ gsap.registerPlugin(ScrollTrigger);
       }
     }
 
+    // Shuffle
     for(var i = positions.length - 1; i > 0; i--){
       var j = Math.floor(Math.random() * (i + 1));
       var tmp = positions[i]; positions[i] = positions[j]; positions[j] = tmp;
     }
     var selected = positions.slice(0, PARTICLE_COUNT);
 
-    particles = [];
-    for(var i = 0; i < selected.length; i++){
-      var p = selected[i];
-      var rnd = Math.random();
-      var col;
-      if(rnd < 0.7){
-        // 70% gold/platinum tones (first 6 colors)
-        col = palette[Math.floor(Math.random() * 6)];
-      } else {
-        // 30% pastel rainbow accents (last 6 colors)
-        col = palette[6 + Math.floor(Math.random() * 6)];
+    if(createNew || particles.length === 0){
+      // İLK YÜKLEME: parçacıkları oluştur, rastgele başlangıç
+      particles = [];
+      for(var i = 0; i < selected.length; i++){
+        var p = selected[i];
+        var rnd = Math.random();
+        var col;
+        if(rnd < 0.7){
+          col = palette[Math.floor(Math.random() * 6)];
+        } else {
+          col = palette[6 + Math.floor(Math.random() * 6)];
+        }
+        var bright = Math.random() < 0.15;
+        var pr = bright ? Math.min(255, col[0] + 40) : col[0];
+        var pg = bright ? Math.min(255, col[1] + 40) : col[1];
+        var pb = bright ? Math.min(255, col[2] + 40) : col[2];
+        particles.push({
+          x: Math.random() * W, y: Math.random() * H,
+          ox: p.x, oy: p.y,
+          vx: 0, vy: 0,
+          r: bright ? (Math.random() * 1.8 + 1.2) : (Math.random() * 1.4 + 0.7),
+          colorR: pr, colorG: pg, colorB: pb,
+          bright: bright
+        });
       }
-      // Some particles are extra bright (platinum sparkle)
-      var bright = Math.random() < 0.15;
-      var pr = bright ? Math.min(255, col[0] + 40) : col[0];
-      var pg = bright ? Math.min(255, col[1] + 40) : col[1];
-      var pb = bright ? Math.min(255, col[2] + 40) : col[2];
-      particles.push({
-        x: Math.random() * W, y: Math.random() * H,
-        ox: p.x, oy: p.y,
-        vx: 0, vy: 0,
-        r: bright ? (Math.random() * 1.8 + 1.2) : (Math.random() * 1.4 + 0.7),
-        colorR: pr, colorG: pg, colorB: pb,
-        bright: bright
-      });
+    } else {
+      // RESIZE: sadece hedef pozisyonları (ox, oy) güncelle
+      // Mevcut parçacıklar yerinde kalır, yumuşakça yeni hedefe gider
+      var count = Math.min(particles.length, selected.length);
+      for(var i = 0; i < count; i++){
+        particles[i].ox = selected[i].x;
+        particles[i].oy = selected[i].y;
+      }
+      // Fazla parçacık varsa kaldır, eksikse ekle
+      if(particles.length > selected.length){
+        particles.length = selected.length;
+      }
+      for(var i = count; i < selected.length; i++){
+        var p = selected[i];
+        var col = palette[Math.floor(Math.random() * 6)];
+        particles.push({
+          x: p.x, y: p.y,
+          ox: p.x, oy: p.y,
+          vx: 0, vy: 0,
+          r: Math.random() * 1.4 + 0.7,
+          colorR: col[0], colorG: col[1], colorB: col[2],
+          bright: false
+        });
+      }
     }
   }
 
@@ -190,11 +246,16 @@ gsap.registerPlugin(ScrollTrigger);
     requestAnimationFrame(animate);
   }
 
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', onResize);
+
+  // Mobil: orientation change desteği
+  window.addEventListener('orientationchange', function(){
+    setTimeout(onResize, 200);
+  });
+
   document.fonts.ready.then(function(){
     resize();
     animate();
-    // Hero entrance animations
     gsap.to('.hero-subtitle', { opacity:1, y:0, duration:0.8, delay:0.5 });
     gsap.to('.hero-tagline', { opacity:1, y:0, duration:0.8, delay:1 });
   });
