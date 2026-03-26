@@ -89,40 +89,39 @@ gsap.registerPlugin(ScrollTrigger);
   var resizeTimer = null;
   var isFirstInit = true;
 
-  function resize(){
-    dpr = window.devicePixelRatio || 1;
-    W = canvas.parentElement.clientWidth;
-    H = canvas.parentElement.clientHeight;
+  function getCanvasSize(){
+    // Cross-platform: canvas boyutunu parent'tan al, scrollbar farkını önle
+    var rect = canvas.parentElement.getBoundingClientRect();
+    return { w: Math.floor(rect.width), h: Math.floor(rect.height) };
+  }
+
+  function setupCanvas(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2); // Windows 1.25x/1.5x, Mac 2x — max 2x cap
+    var size = getCanvasSize();
+    W = size.w;
+    H = size.h;
     canvas.width = W * dpr;
     canvas.height = H * dpr;
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
-    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
 
+  function resize(){
+    setupCanvas();
     if(isFirstInit){
-      // İlk yükleme: parçacıkları oluştur
       sampleText(true);
       isFirstInit = false;
       prevW = W; prevH = H;
     }
   }
 
-  // Debounced resize — sadece hedef pozisyonları güncelle, animasyonu tetikleme
   function onResize(){
-    dpr = window.devicePixelRatio || 1;
-    W = canvas.parentElement.clientWidth;
-    H = canvas.parentElement.clientHeight;
-    canvas.width = W * dpr;
-    canvas.height = H * dpr;
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-
-    // Debounce: resize bittikten 300ms sonra hedefleri güncelle
+    setupCanvas();
     if(resizeTimer) clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function(){
-      if(W !== prevW || H !== prevH){
-        sampleText(false); // sadece hedef güncelle, parçacık sıfırlama
+      if(Math.abs(W - prevW) > 5 || Math.abs(H - prevH) > 5){
+        sampleText(false);
         prevW = W; prevH = H;
       }
     }, 300);
@@ -132,14 +131,19 @@ gsap.registerPlugin(ScrollTrigger);
     var offCanvas = document.createElement('canvas');
     var offCtx = offCanvas.getContext('2d');
     var text = 'ASTOR';
-    var fontSize = Math.min(W * 0.22, 320);
+    // Cross-platform font size: viewport bazlı, max sınırlı
+    var fontSize = Math.min(W * 0.18, 280);
+    // Mobil: minimum okunabilir boyut
+    if(W < 500) fontSize = Math.max(W * 0.2, 40);
     offCanvas.width = W;
     offCanvas.height = H;
     offCtx.fillStyle = '#ffffff';
-    offCtx.font = '800 ' + fontSize + 'px "Bricolage Grotesque", sans-serif';
+    // Fallback font zinciri — Windows/Linux/Mac uyumlu
+    offCtx.font = '800 ' + fontSize + 'px "Bricolage Grotesque", "Segoe UI", "Helvetica Neue", Arial, sans-serif';
     offCtx.textAlign = 'center';
     offCtx.textBaseline = 'middle';
-    offCtx.fillText(text, W / 2, H * 0.42);
+    // Tam ortala: yatay ve dikey merkez
+    offCtx.fillText(text, W / 2, H / 2 - fontSize * 0.1);
 
     var imageData = offCtx.getImageData(0,0,W,H);
     var data = imageData.data;
@@ -221,11 +225,11 @@ gsap.registerPlugin(ScrollTrigger);
   });
   canvas.addEventListener('mouseleave', function(){ mouse.x = -9999; mouse.y = -9999; });
   canvas.addEventListener('touchmove', function(e){
-    e.preventDefault();
+    // preventDefault kaldırıldı — scroll'u engellememeli
     var rect = canvas.getBoundingClientRect();
     mouse.x = e.touches[0].clientX - rect.left;
     mouse.y = e.touches[0].clientY - rect.top;
-  }, { passive: false });
+  }, { passive: true });
   canvas.addEventListener('touchend', function(){ mouse.x = -9999; mouse.y = -9999; });
 
   function animate(){
@@ -683,21 +687,31 @@ gsap.registerPlugin(ScrollTrigger);
     }
   }
 
+  function getSidebarWidth(){
+    var header = document.getElementById('header');
+    return header ? header.offsetWidth : 60;
+  }
+
+  function isMobile(){ return window.innerWidth <= 768; }
+
   function resizeMorph(){
-    dpr=window.devicePixelRatio||1;
-    W=window.innerWidth-60;
-    H=window.innerHeight;
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    var sideW = getSidebarWidth();
+    W=window.innerWidth-sideW;
+    // Mobilde canvas üst yarıyı kaplar, card alta oturur
+    H=isMobile() ? Math.floor(window.innerHeight * 0.45) : window.innerHeight;
     canvas.width=W*dpr;
     canvas.height=H*dpr;
     canvas.style.width=W+'px';
     canvas.style.height=H+'px';
+    canvas.style.left=sideW+'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
     cx=W*sectionCenterX[0];cy=H/2;targetCX=cx;targetCY=cy;
     generateAll();
     initParticles();
   }
 
-  canvas.addEventListener('mousemove',function(e){mouse.x=e.clientX-60;mouse.y=e.clientY;});
+  canvas.addEventListener('mousemove',function(e){mouse.x=e.clientX-getSidebarWidth();mouse.y=e.clientY;});
   canvas.addEventListener('mouseleave',function(){mouse.x=-9999;mouse.y=-9999;});
 
   var activeCardId=null;
@@ -1146,18 +1160,40 @@ gsap.registerPlugin(ScrollTrigger);
   /* --- Footer entrance --- */
   gsap.from('.mega-footer .brand-area', {
     opacity: 0, y: 40, duration: 0.7, ease: 'power3.out',
-    scrollTrigger: { trigger: '.mega-footer .brand-area', start: 'top 92%' }
+    scrollTrigger: { trigger: '.mega-footer', start: 'top 95%' }
   });
   gsap.from('.mega-footer .footer-col', {
-    opacity: 0, y: 30, duration: 0.5, stagger: 0.1, ease: 'power3.out',
-    scrollTrigger: { trigger: '.mega-footer .footer-columns', start: 'top 88%' }
+    opacity: 0, y: 20, duration: 0.5, stagger: 0.08, ease: 'power3.out',
+    scrollTrigger: { trigger: '.mega-footer .footer-columns', start: 'top 98%' }
   });
   gsap.from('.mega-footer .social-btn', {
     opacity: 0, scale: 0, duration: 0.3, stagger: 0.05, ease: 'back.out(2)',
-    scrollTrigger: { trigger: '.mega-footer .social-row', start: 'top 92%' }
+    scrollTrigger: { trigger: '.mega-footer .social-row', start: 'top 98%' }
   });
   gsap.from('.mega-footer .footer-bottom', {
     opacity: 0, duration: 0.6, ease: 'power2.out',
-    scrollTrigger: { trigger: '.mega-footer .footer-bottom', start: 'top 95%' }
+    scrollTrigger: { trigger: '.mega-footer .footer-bottom', start: 'top 98%' }
+  });
+})();
+
+/* ============================================================
+   11. FOOTER ACCORDION — mobile
+   ============================================================ */
+(function(){
+  var isMobileView = function(){ return window.innerWidth <= 768; };
+  var cols = document.querySelectorAll('.footer-col');
+  if(!cols.length) return;
+
+  cols.forEach(function(col){
+    var title = col.querySelector('.col-title');
+    if(!title) return;
+    title.addEventListener('click', function(){
+      if(!isMobileView()) return;
+      var wasOpen = col.classList.contains('open');
+      // Diğerlerini kapat
+      cols.forEach(function(c){ c.classList.remove('open'); });
+      // Tıklananı aç/kapat
+      if(!wasOpen) col.classList.add('open');
+    });
   });
 })();
