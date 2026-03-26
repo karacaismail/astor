@@ -13,10 +13,13 @@
 </head>
 <body>
 
+<!-- WCAG AAA: Skip-to-content -->
+<a href="#capabilities" class="skip-to-content">İçeriğe Atla</a>
+
 <!-- ============================================================
      SIDEBAR HEADER
      ============================================================ -->
-<div id="header" class="header">
+<header id="header" class="header" role="banner">
   <div class="header__top">
     <a href="index.html" id="logo" class="logo">
       <span class="logo-text">ASTOR</span>
@@ -38,8 +41,8 @@
 <!-- ============================================================
      FULLSCREEN MENU OVERLAY
      ============================================================ -->
-<div class="menu-overlay" id="menuOverlay">
-  <nav class="menu-nav">
+<div class="menu-overlay" id="menuOverlay" role="dialog" aria-label="Ana Menü">
+  <nav class="menu-nav" role="navigation" aria-label="Ana Navigasyon">
     <a href="#hero"><span class="nav-num">01</span> Ana Sayfa</a>
     <a href="#about"><span class="nav-num">02</span> Hakkımızda</a>
     <a href="#products"><span class="nav-num">03</span> Ürünler</a>
@@ -54,7 +57,7 @@
 <!-- ============================================================
      MAIN CONTENT
      ============================================================ -->
-<div class="main-content">
+<main class="main-content" role="main">
 
 <!-- ============================================================
      HERO
