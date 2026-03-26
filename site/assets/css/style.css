@@ -249,6 +249,29 @@ img { max-width:100%; display:block; }
   pointer-events: auto;
 }
 
+/* Menu close button — overlay içinde sağ üst */
+.menu-close-btn {
+  position: absolute;
+  top: 2rem;
+  right: 2.5rem;
+  width: 48px; height: 48px;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 10;
+}
+.menu-close-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: rotate(90deg);
+}
+
 .menu-nav {
   display: flex;
   flex-direction: column;

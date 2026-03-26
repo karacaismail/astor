@@ -15,21 +15,40 @@ gsap.registerPlugin(ScrollTrigger);
    ============================================================ */
 (function(){
   var menuBtn = document.getElementById('menuButton');
+  var menuCloseBtn = document.getElementById('menuCloseBtn');
   var overlay = document.getElementById('menuOverlay');
   var navLinks = overlay.querySelectorAll('.menu-nav a');
 
+  function openMenu(){
+    menuBtn.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    menuBtn.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
   menuBtn.addEventListener('click', function(){
-    menuBtn.classList.toggle('active');
-    overlay.classList.toggle('active');
-    document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+    overlay.classList.contains('active') ? closeMenu() : openMenu();
   });
 
+  // X butonu — overlay içinde
+  if(menuCloseBtn){
+    menuCloseBtn.addEventListener('click', closeMenu);
+  }
+
+  // Nav link tıklayınca kapat
   navLinks.forEach(function(link){
-    link.addEventListener('click', function(){
-      menuBtn.classList.remove('active');
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
-    });
+    link.addEventListener('click', closeMenu);
+  });
+
+  // ESC tuşu ile kapat
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && overlay.classList.contains('active')){
+      closeMenu();
+    }
   });
 })();
 
