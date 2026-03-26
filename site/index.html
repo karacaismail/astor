@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ASTOR — Pamuktan Modaya, Kumaş Üretimi</title>
+<meta name="description" content="ASTOR Tekstil — Örme kumaş üretiminde öncü. Pamuktan modaya uzanan değer zincirinde, kaliteli kumaşlarla geleceği dokuyoruz."/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/css/style.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     SIDEBAR HEADER
+     ============================================================ -->
+<div id="header" class="header">
+  <div class="header__top">
+    <a href="index.html" id="logo" class="logo">
+      <span class="logo-text">ASTOR</span>
+    </a>
+    <button class="lang-switch" id="langSwitch">TR</button>
+    <div id="menuButton" class="menu-button-wrap">
+      <div class="menu-button-text">Menü</div>
+      <div class="menu-lines"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+  <div class="header__bottom">
+    <a href="#contact" class="header__link">
+      <span>Teklif Al</span>
+      <span class="header__link-arrow">↗</span>
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================
+     FULLSCREEN MENU OVERLAY
+     ============================================================ -->
+<div class="menu-overlay" id="menuOverlay">
+  <nav class="menu-nav">
+    <a href="#hero"><span class="nav-num">01</span> Ana Sayfa</a>
+    <a href="#about"><span class="nav-num">02</span> Hakkımızda</a>
+    <a href="#products"><span class="nav-num">03</span> Ürünler</a>
+    <a href="#process"><span class="nav-num">04</span> Üretim Süreci</a>
+    <a href="#transformation"><span class="nav-num">05</span> Dönüşüm</a>
+    <a href="#journey"><span class="nav-num">06</span> Yolculuk</a>
+    <a href="#stats"><span class="nav-num">07</span> Rakamlar</a>
+    <a href="#contact"><span class="nav-num">08</span> İletişim</a>
+  </nav>
+</div>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<div class="main-content">
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero-section" id="hero">
+  <canvas id="heroCanvas" class="hero-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-subtitle">Örme Kumaş Üretimi</p>
+    <p class="hero-tagline">Pamuktan Modaya, Geleceği Dokuyoruz</p>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Keşfet</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- Background wrapper for content sections -->
+<div class="bg-section">
+
+<!-- ============================================================
+     3D HOVER LAYERS — Çekirdek Yetkinlikler
+     ============================================================ -->
+<section class="layers-section" id="capabilities">
+  <div class="section-header">
+    <div class="section-eyebrow"><i class="ph ph-stack"></i> Çekirdek Yetkinlikler</div>
+    <h2 class="section-title">Tekstilin Her Adımında</h2>
+    <p class="section-desc">Örme, boyama ve terbiyeden kalite kontrole; entegre üretim hattımızla modanın altyapısını oluşturuyoruz.</p>
+  </div>
+
+  <div class="layers-row">
+    <div class="layer-card" data-layers>
+      <div class="layer-bg"></div>
+      <div class="layer-content">
+        <i class="ph ph-yarn layer-icon"></i>
+        <h3>Örme Üretimi</h3>
+        <p>Single jersey, interlock, rib, jacquard — 30+ makinelik modern parkur</p>
+      </div>
+      <div class="layer-overlay">
+        <span class="overlay-badge">Çekirdek</span>
+      </div>
+    </div>
+
+    <div class="layer-card" data-layers>
+      <div class="layer-bg"></div>
+      <div class="layer-content">
+        <i class="ph ph-paint-bucket layer-icon"></i>
+        <h3>Boyama &amp; Terbiye</h3>
+        <p>Reaktif, dispers boyama; dijital baskı; anti-bakteriyel apre teknolojileri</p>
+      </div>
+      <div class="layer-overlay">
+        <span class="overlay-badge">Renk</span>
+      </div>
+    </div>
+
+    <div class="layer-card" data-layers>
+      <div class="layer-bg"></div>
+      <div class="layer-content">
+        <i class="ph ph-seal-check layer-icon"></i>
+        <h3>Kalite &amp; Sertifika</h3>
+        <p>OEKO-TEX, GOTS, GRS sertifikaları; laboratuvar test altyapısı</p>
+      </div>
+      <div class="layer-overlay">
+        <span class="overlay-badge">Güven</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CULTURE MOSAIC — Hakkımızda
+     ============================================================ -->
+<section class="culture-section" id="about">
+  <div class="section-header">
+    <div class="section-eyebrow"><i class="ph ph-factory"></i> Hakkımızda</div>
+    <h2 class="section-title">Pamuktan Modaya Uzanan Hikâye</h2>
+    <p class="section-desc">ASTOR olarak, örme kumaş üretiminde kalite, inovasyon ve sürdürülebilirlik ile tekstil değer zincirinin kalbinde yer alıyoruz.</p>
+  </div>
+
+  <div class="mosaic-grid" id="mosaicGrid">
+    <div class="mosaic-tile tile-photo span-2-col">
+      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=400&fit=crop" alt="Üretim Tesisi" loading="lazy"/>
+      <div class="photo-label"><span><i class="ph ph-factory" style="margin-right:.4rem"></i> Modern Üretim Tesisimiz</span></div>
+    </div>
+
+    <div class="mosaic-tile tile-value">
+      <div class="value-icon icon-gold"><i class="ph ph-lightbulb"></i></div>
+      <div class="value-title">İnovasyon</div>
+      <div class="value-desc">En son örme teknolojileri ve dijital baskı sistemleriyle üretim sınırlarını zorluyoruz.</div>
+    </div>
+
+    <div class="mosaic-tile tile-stat">
+      <div><span class="stat-number stat-gold" data-target="500">0</span><span class="stat-suffix stat-gold"> Ton</span></div>
+      <div class="stat-label">Aylık Üretim Kapasitesi</div>
+    </div>
+
+    <div class="mosaic-tile tile-value">
+      <div class="value-icon icon-green"><i class="ph ph-leaf"></i></div>
+      <div class="value-title">Sürdürülebilirlik</div>
+      <div class="value-desc">BCI pamuk, geri dönüştürülmüş polyester ve ZDHC uyumlu boyama prosesleri.</div>
+    </div>
+
+    <div class="mosaic-tile tile-photo span-2-row">
+      <img src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=400&h=800&fit=crop" alt="Kumaş Çeşitleri" loading="lazy"/>
+      <div class="photo-label"><span><i class="ph ph-swatches" style="margin-right:.4rem"></i> Premium Kumaş Koleksiyonu</span></div>
+    </div>
+
+    <div class="mosaic-tile tile-quote span-2-col">
+      <div class="quote-mark">&ldquo;</div>
+      <div class="quote-text">Biz sadece kumaş üretmiyoruz, modayı mümkün kılıyoruz. Tarladan rafa kadar izlenebilir, sürdürülebilir bir değer zinciri inşa ediyoruz.</div>
+      <div class="quote-author">
+        <img class="quote-author-img" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=72&h=72&fit=crop" alt="CEO"/>
+        <div class="quote-author-info">
+          <div class="quote-author-name">Kurucu</div>
+          <div class="quote-author-role">ASTOR Tekstil</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mosaic-tile tile-stat">
+      <div><span class="stat-number stat-blue" data-target="35">0</span><span class="stat-suffix stat-blue">+</span></div>
+      <div class="stat-label">İhracat Ülkesi</div>
+    </div>
+
+    <div class="mosaic-tile tile-photo span-2-col">
+      <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=400&fit=crop" alt="Kumaş Showroom" loading="lazy"/>
+      <div class="photo-label"><span><i class="ph ph-swatches" style="margin-right:.4rem"></i> Kumaş Numune Showroom</span></div>
+    </div>
+
+    <div class="mosaic-tile tile-value">
+      <div class="value-icon icon-blue"><i class="ph ph-palette"></i></div>
+      <div class="value-title">Tasarım &amp; Koleksiyon</div>
+      <div class="value-desc">Sezon trendlerine uygun kumaşlar, özel renk paletleri ve numune geliştirme.</div>
+    </div>
+
+    <div class="mosaic-tile tile-value">
+      <div class="value-icon icon-amber"><i class="ph ph-lightning"></i></div>
+      <div class="value-title">Hızlı Teslimat</div>
+      <div class="value-desc">Entegre üretim hattımız sayesinde siparişten teslimata 15-20 gün.</div>
+    </div>
+
+    <div class="mosaic-tile tile-stat">
+      <div><span class="stat-number stat-green" data-target="25">0</span><span class="stat-suffix stat-green"> Yıl</span></div>
+      <div class="stat-label">Sektörel Deneyim</div>
+    </div>
+
+    <div class="mosaic-tile tile-value">
+      <div class="value-icon icon-rose"><i class="ph ph-handshake"></i></div>
+      <div class="value-title">Global Markalar</div>
+      <div class="value-desc">Dünya'nın önde gelen fast-fashion ve spor markalarının güvenilir tedarikçisi.</div>
+    </div>
+  </div>
+
+  <div class="mosaic-footer" id="mosaicFooter">
+    <div class="mosaic-footer-text">Tarladan rafa kadar izlenebilir üretim</div>
+    <div class="mosaic-footer-highlight">Pamuktan Modaya, ASTOR Farkı</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOVER REVEAL GALLERY — Ürün Grupları
+     ============================================================ -->
+<section class="portfolio-section" id="products">
+  <div class="section-header">
+    <div class="section-eyebrow"><i class="ph ph-swatches"></i> Ürün Grupları</div>
+    <h2 class="section-title">Kumaş Koleksiyonumuz</h2>
+    <p class="section-desc">Her sezon güncellenen geniş koleksiyonumuzla, moda endüstrisinin ihtiyaç duyduğu her kumaş tipini üretiyoruz.</p>
+  </div>
+
+  <div class="project-list" id="projectList">
+    <div class="project-item" data-img="0">
+      <div class="pi-left"><span class="pi-number">01</span><div class="pi-info"><div class="pi-title">Single Jersey</div><div class="pi-tags"><span class="pi-tag">Pamuk</span><span class="pi-tag">Modal</span><span class="pi-tag">Viskon</span></div></div></div>
+      <div class="pi-right">100-220 gr/m² <i class="ph ph-arrow-right pi-arrow"></i></div>
+    </div>
+    <div class="project-item" data-img="1">
+      <div class="pi-left"><span class="pi-number">02</span><div class="pi-info"><div class="pi-title">Interlock &amp; Rib</div><div class="pi-tags"><span class="pi-tag">Penye</span><span class="pi-tag">Elastan</span></div></div></div>
+      <div class="pi-right">160-300 gr/m² <i class="ph ph-arrow-right pi-arrow"></i></div>
+    </div>
+    <div class="project-item" data-img="2">
+      <div class="pi-left"><span class="pi-number">03</span><div class="pi-info"><div class="pi-title">Jacquard &amp; Desenli</div><div class="pi-tags"><span class="pi-tag">Jakarlı</span><span class="pi-tag">Transfer</span></div></div></div>
+      <div class="pi-right">180-350 gr/m² <i class="ph ph-arrow-right pi-arrow"></i></div>
+    </div>
+    <div class="project-item" data-img="3">
+      <div class="pi-left"><span class="pi-number">04</span><div class="pi-info"><div class="pi-title">Flece &amp; Şardon</div><div class="pi-tags"><span class="pi-tag">Polar</span><span class="pi-tag">Fırçalı</span></div></div></div>
+      <div class="pi-right">200-400 gr/m² <i class="ph ph-arrow-right pi-arrow"></i></div>
+    </div>
+    <div class="project-item" data-img="4">
+      <div class="pi-left"><span class="pi-number">05</span><div class="pi-info"><div class="pi-title">Dijital Baskı Kumaşları</div><div class="pi-tags"><span class="pi-tag">Süblime</span><span class="pi-tag">Pigment</span></div></div></div>
+      <div class="pi-right">Özel Üretim <i class="ph ph-arrow-right pi-arrow"></i></div>
+    </div>
+    <div class="project-item" data-img="5">
+      <div class="pi-left"><span class="pi-number">06</span><div class="pi-info"><div class="pi-title">Sürdürülebilir Koleksiyon</div><div class="pi-tags"><span class="pi-tag">Organik</span><span class="pi-tag">GRS</span><span class="pi-tag">BCI</span></div></div></div>
+      <div class="pi-right">Sertifikalı <i class="ph ph-arrow-right pi-arrow"></i></div>
+    </div>
+  </div>
+</section>
+
+<div class="hover-image" id="hoverImage">
+  <img id="hoverImageImg" src="" alt=""/>
+</div>
+
+<!-- ============================================================
+     GANTT TIMELINE — Siparişten Teslimata
+     ============================================================ -->
+<section class="gantt-section" id="process">
+  <div class="section-header">
+    <div class="section-eyebrow"><i class="ph ph-path"></i> Üretim Süreci</div>
+    <h2 class="section-title">Siparişten Teslimata</h2>
+    <p class="section-desc">Pamuktan modaya uzanan yolculukta, her aşamayı titizlikle yönetiyoruz. Entegre üretim hattımız ile 15-20 günde teslimat.</p>
+  </div>
+
+  <div class="gantt-container">
+    <div class="gantt-header">
+      <div class="gantt-title"><i class="ph ph-flow-arrow"></i> Tekstil Değer Zinciri — Sipariş Süreci</div>
+      <div class="gantt-period"><i class="ph ph-calendar"></i> Toplam Süre: ~18 İş Günü</div>
+    </div>
+
+    <div class="gantt-scroll">
+      <div class="gantt-chart">
+        <div class="gantt-timeline-row">
+          <div class="gantt-timeline-labels">Aşamalar</div>
+          <div class="gantt-weeks">
+            <div class="gantt-week">Gün 1-2</div>
+            <div class="gantt-week">Gün 3-4</div>
+            <div class="gantt-week">Gün 5-6</div>
+            <div class="gantt-week">Gün 7-8</div>
+            <div class="gantt-week">Gün 9-10</div>
+            <div class="gantt-week">Gün 11-12</div>
+            <div class="gantt-week">Gün 13-15</div>
+            <div class="gantt-week">Gün 16-18</div>
+          </div>
+        </div>
+
+        <div class="gantt-body" id="ganttBody">
+          <svg class="dep-svg" id="depSvg">
+            <defs><marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="var(--muted-2)"/></marker></defs>
+          </svg>
+
+          <div class="gantt-row">
+            <div class="gantt-task-label">
+              <div class="gtl-icon" style="background:rgba(201,169,110,.15);color:var(--accent)"><i class="ph ph-yarn"></i></div>
+              <div class="gtl-name">İplik Tedariği</div>
+              <span class="gtl-status done">Stokta</span>
+            </div>
+            <div class="gantt-bars"><div class="gantt-bar c1" style="left:0%;width:12.5%"><span class="gantt-bar-label">1-2 gn</span></div></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task-label">
+              <div class="gtl-icon" style="background:rgba(56,189,248,.15);color:#38bdf8"><i class="ph ph-circles-three-plus"></i></div>
+              <div class="gtl-name">Örme Üretimi</div>
+              <span class="gtl-status progress">Çekirdek</span>
+            </div>
+            <div class="gantt-bars"><div class="gantt-bar c2" style="left:12.5%;width:25%"><span class="gantt-bar-label">3-6 gn</span></div></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task-label">
+              <div class="gtl-icon" style="background:rgba(52,211,153,.15);color:#34d399"><i class="ph ph-paint-bucket"></i></div>
+              <div class="gtl-name">Boyama &amp; Terbiye</div>
+              <span class="gtl-status progress">Devam</span>
+            </div>
+            <div class="gantt-bars"><div class="gantt-bar c3" style="left:37.5%;width:25%"><span class="gantt-bar-label">7-10 gn</span></div></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task-label">
+              <div class="gtl-icon" style="background:rgba(251,191,36,.15);color:#fbbf24"><i class="ph ph-stamp"></i></div>
+              <div class="gtl-name">Baskı &amp; Apre</div>
+              <span class="gtl-status planned">Opsiyonel</span>
+            </div>
+            <div class="gantt-bars"><div class="gantt-bar c4" style="left:50%;width:18.75%"><span class="gantt-bar-label">9-12 gn</span></div></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task-label">
+              <div class="gtl-icon" style="background:rgba(248,113,113,.15);color:#f87171"><i class="ph ph-seal-check"></i></div>
+              <div class="gtl-name">Kalite Kontrol</div>
+              <span class="gtl-status planned">Test</span>
+            </div>
+            <div class="gantt-bars"><div class="gantt-bar c5" style="left:62.5%;width:18.75%"><span class="gantt-bar-label">11-15 gn</span></div></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task-label">
+              <div class="gtl-icon" style="background:rgba(167,139,250,.15);color:#a78bfa"><i class="ph ph-truck"></i></div>
+              <div class="gtl-name">Paketleme &amp; Sevkiyat</div>
+              <span class="gtl-status planned">Lojistik</span>
+            </div>
+            <div class="gantt-bars"><div class="gantt-bar c6" style="left:81.25%;width:18.75%"><span class="gantt-bar-label">16-18 gn</span></div></div>
+          </div>
+
+          <div class="today-line" id="todayLine" style="left:calc(200px + 45%)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COMPARISON SLIDER — Pamuk Tarlası → Şehir Modası (Pointer-based)
+     ============================================================ -->
+<section class="cs-section" id="transformation">
+  <div class="cs-header">
+    <div class="cs-eyebrow">Dönüşüm</div>
+    <h2 class="cs-title">Pamuğu Modaya Dönüştürüyoruz</h2>
+    <p class="cs-subtitle">Tutamacı sürükleyerek pamuk tarlasından şehir modasına uzanan dönüşümü keşfet.</p>
+  </div>
+
+  <div class="comparison-wrapper" id="compWrapper">
+    <!-- Right panel (after — şehir modası) sits behind -->
+    <div class="comp-panel comp-right" id="compRight">
+      <img src="https://images.unsplash.com/photo-1635693047196-cc0976305ae9?w=1200&h=675&fit=crop" alt="Şehir Modası"/>
+    </div>
+    <!-- Left panel (before — pamuk tarlası) clips over -->
+    <div class="comp-panel comp-left" id="compLeft">
+      <img src="https://images.unsplash.com/photo-1705147293352-3e81c1b8ab5b?w=1200&h=675&fit=crop" alt="Pamuk Tarlası"/>
+    </div>
+    <!-- Handle -->
+    <div class="comp-handle" id="compHandle"></div>
+    <!-- Labels -->
+    <span class="comp-label comp-label-left">Pamuk Tarlası</span>
+    <span class="comp-label comp-label-right">Şehir Modası</span>
+  </div>
+
+  <div class="cs-stats">
+    <div class="cs-stat"><div class="cs-stat-num">500+</div><div class="cs-stat-label">Ton / ay kumaş üretimi</div></div>
+    <div class="cs-stat"><div class="cs-stat-num">2000+</div><div class="cs-stat-label">Kumaş çeşidi kataloğu</div></div>
+    <div class="cs-stat"><div class="cs-stat-num">15-20</div><div class="cs-stat-label">Gün ortalama teslimat</div></div>
+  </div>
+</section>
+
+</div><!-- /.bg-section -->
+
+<!-- ============================================================
+     MORPH ZOOM JOURNEY — Pamuktan Modaya Yolculuk
+     ============================================================ -->
+<section id="journey">
+<canvas id="morphCanvas"></canvas>
+<div class="morph-progress-bar" id="morphProgressBar"></div>
+
+<!-- Journey Cards — 3D tilt + image + glassmorphism -->
+<div class="j-card pos-right" id="card0" data-accent="#c9a96e">
+  <div class="jc-img"><img src="https://images.unsplash.com/photo-1599719500956-d158a26ab3ee?w=480&h=280&fit=crop" alt="Pamuk Tarlası" loading="lazy"/></div>
+  <div class="jc-body">
+    <div class="jc-badge" style="--ac:#c9a96e"><span>01</span> Hammadde</div>
+    <h2>Pamuk Tarlası</h2>
+    <p>BCI sertifikalı pamuk tarlalarından özenle seçilen lifler. Topraktan başlayan kalite yolculuğu.</p>
+    <div class="jc-stats"><div class="jc-stat"><span class="jc-stat-num" style="color:#c9a96e">100%</span><span class="jc-stat-lbl">İzlenebilir</span></div><div class="jc-stat"><span class="jc-stat-num" style="color:#c9a96e">BCI</span><span class="jc-stat-lbl">Sertifikalı</span></div></div>
+  </div>
+</div>
+
+<div class="j-card pos-left" id="card1" data-accent="#38bdf8">
+  <div class="jc-img"><img src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=480&h=280&fit=crop" alt="İplik Üretimi" loading="lazy"/></div>
+  <div class="jc-body">
+    <div class="jc-badge" style="--ac:#38bdf8"><span>02</span> İplik</div>
+    <h2>İplik Üretimi</h2>
+    <p>Ring, compact ve open-end makinelerle pamuk liflerini ipliklere dönüştürüyoruz. Doğru iplik, kumaşın DNA'sıdır.</p>
+    <div class="jc-stats"><div class="jc-stat"><span class="jc-stat-num" style="color:#38bdf8">Ne/30</span><span class="jc-stat-lbl">İplik No</span></div><div class="jc-stat"><span class="jc-stat-num" style="color:#38bdf8">3 Tip</span><span class="jc-stat-lbl">Makine</span></div></div>
+  </div>
+</div>
+
+<div class="j-card pos-right" id="card2" data-accent="#34d399">
+  <div class="jc-img"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=480&h=280&fit=crop" alt="Örme Üretimi" loading="lazy"/></div>
+  <div class="jc-body">
+    <div class="jc-badge" style="--ac:#34d399"><span>03</span> Örme</div>
+    <h2>Örme Üretimi</h2>
+    <p>30+ yuvarlak örme makinesiyle single jersey, interlock, rib ve jacquard. ASTOR'un kalbi burada atar.</p>
+    <div class="jc-stats"><div class="jc-stat"><span class="jc-stat-num" style="color:#34d399">30+</span><span class="jc-stat-lbl">Makine</span></div><div class="jc-stat"><span class="jc-stat-num" style="color:#34d399">500t</span><span class="jc-stat-lbl">Ay/Kapasite</span></div></div>
+  </div>
+</div>
+
+<div class="j-card pos-left" id="card3" data-accent="#fb923c">
+  <div class="jc-img"><img src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=480&h=280&fit=crop" alt="Boyama Terbiye" loading="lazy"/></div>
+  <div class="jc-body">
+    <div class="jc-badge" style="--ac:#fb923c"><span>04</span> Boyama</div>
+    <h2>Boyama &amp; Terbiye</h2>
+    <p>Reaktif, dispers boyama ve dijital baskı. ZDHC uyumlu proseslerle çevre dostu renklendirme.</p>
+    <div class="jc-stats"><div class="jc-stat"><span class="jc-stat-num" style="color:#fb923c">1000+</span><span class="jc-stat-lbl">Renk</span></div><div class="jc-stat"><span class="jc-stat-num" style="color:#fb923c">ZDHC</span><span class="jc-stat-lbl">Uyumlu</span></div></div>
+  </div>
+</div>
+
+<div class="j-card pos-right" id="card4" data-accent="#ec4899">
+  <div class="jc-img"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=480&h=280&fit=crop" alt="Kalite Kontrol" loading="lazy"/></div>
+  <div class="jc-body">
+    <div class="jc-badge" style="--ac:#ec4899"><span>05</span> Kalite</div>
+    <h2>Kalite Kontrol</h2>
+    <p>Gramaj, pilling, haslık testleri. OEKO-TEX, GOTS, GRS sertifikaları. Her top kusursuz çıkar.</p>
+    <div class="jc-stats"><div class="jc-stat"><span class="jc-stat-num" style="color:#ec4899">%98</span><span class="jc-stat-lbl">Başarı</span></div><div class="jc-stat"><span class="jc-stat-num" style="color:#ec4899">8</span><span class="jc-stat-lbl">Sertifika</span></div></div>
+  </div>
+</div>
+
+<!-- Card 5: explosion — no card -->
+
+<div class="j-card pos-left" id="card6" data-accent="#a855f7">
+  <div class="jc-img"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=480&h=280&fit=crop" alt="Moda Rafları" loading="lazy"/></div>
+  <div class="jc-body">
+    <div class="jc-badge" style="--ac:#a855f7"><span>07</span> Moda</div>
+    <h2>Moda Raflarına</h2>
+    <p>Kumaşlarımız dünyanın önde gelen markalarının koleksiyonlarında hayat buluyor. Tarladan rafa — döngü tamamlanıyor.</p>
+    <div class="jc-stats"><div class="jc-stat"><span class="jc-stat-num" style="color:#a855f7">35+</span><span class="jc-stat-lbl">Ülke</span></div><div class="jc-stat"><span class="jc-stat-num" style="color:#a855f7">50+</span><span class="jc-stat-lbl">Marka</span></div></div>
+  </div>
+</div>
+
+<div class="shape-nav" id="shapeNav">
+  <div class="shape-dot active" data-idx="0"></div>
+  <div class="shape-dot" data-idx="1"></div>
+  <div class="shape-dot" data-idx="2"></div>
+  <div class="shape-dot" data-idx="3"></div>
+  <div class="shape-dot" data-idx="4"></div>
+  <div class="shape-dot" data-idx="5"></div>
+  <div class="shape-dot" data-idx="6"></div>
+  <div class="shape-dot" data-idx="7"></div>
+</div>
+
+<div class="journey-spacer">
+  <div class="section-ghost"></div>
+  <div class="section-ghost"></div>
+  <div class="section-ghost"></div>
+  <div class="section-ghost"></div>
+  <div class="section-ghost"></div>
+  <div class="section-ghost"></div>
+  <div class="section-ghost"></div>
+  <div class="section-ghost"></div>
+</div>
+</section>
+
+<!-- Background wrapper for post-journey sections -->
+<div class="bg-section">
+
+<!-- ============================================================
+     TICKER TAPE — Rakamlarla ASTOR
+     ============================================================ -->
+<section class="ticker-section" id="stats">
+  <div class="section-header" style="padding:0 6vw;margin-bottom:4rem">
+    <div class="section-badge"><i class="ph ph-chart-line-up"></i><span>Rakamlarla ASTOR</span></div>
+    <h2 class="sec-title">Başarı <span>Akışı</span></h2>
+    <p class="sec-desc">Pamuktan modaya uzanan yolculuğumuzda elde ettiğimiz başarı rakamları.</p>
+  </div>
+
+  <div class="ticker-row" id="tickerRow1">
+    <div class="ticker-track" id="track1">
+      <div class="ticker-badge badge-gold">
+        <div class="badge-icon"><i class="ph ph-factory"></i></div>
+        <span class="badge-number">500+</span>
+        <span class="badge-label">Ton/Ay Kapasite</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-blue">
+        <div class="badge-icon"><i class="ph ph-calendar-check"></i></div>
+        <span class="badge-number">25</span>
+        <span class="badge-label">Yıl Deneyim</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-green">
+        <div class="badge-icon"><i class="ph ph-globe-hemisphere-west"></i></div>
+        <span class="badge-number">35+</span>
+        <span class="badge-label">İhracat Ülkesi</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-pink">
+        <div class="badge-icon"><i class="ph ph-swatches"></i></div>
+        <span class="badge-number">2000+</span>
+        <span class="badge-label">Kumaş Çeşidi</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-amber">
+        <div class="badge-icon"><i class="ph ph-users-three"></i></div>
+        <span class="badge-number">350+</span>
+        <span class="badge-label">Çalışan</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-orange">
+        <div class="badge-icon"><i class="ph ph-circles-three-plus"></i></div>
+        <span class="badge-number">30+</span>
+        <span class="badge-label">Örme Makinesi</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-teal">
+        <div class="badge-icon"><i class="ph ph-seal-check"></i></div>
+        <span class="badge-number">8</span>
+        <span class="badge-label">Uluslararası Sertifika</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker-row" id="tickerRow2">
+    <div class="ticker-track" id="track2">
+      <div class="ticker-badge badge-green">
+        <div class="badge-icon"><i class="ph ph-leaf"></i></div>
+        <span class="badge-number">%40</span>
+        <span class="badge-label">Sürdürülebilir Üretim</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-gold">
+        <div class="badge-icon"><i class="ph ph-truck"></i></div>
+        <span class="badge-number">15-20</span>
+        <span class="badge-label">Gün Teslimat</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-blue">
+        <div class="badge-icon"><i class="ph ph-flask"></i></div>
+        <span class="badge-number">%98</span>
+        <span class="badge-label">Haslık Başarı Oranı</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-amber">
+        <div class="badge-icon"><i class="ph ph-shopping-bag"></i></div>
+        <span class="badge-number">50+</span>
+        <span class="badge-label">Marka Referansı</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-pink">
+        <div class="badge-icon"><i class="ph ph-recycle"></i></div>
+        <span class="badge-number">GRS</span>
+        <span class="badge-label">Geri Dönüşüm Sertifikası</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-orange">
+        <div class="badge-icon"><i class="ph ph-paint-brush"></i></div>
+        <span class="badge-number">1000+</span>
+        <span class="badge-label">Renk Seçeneği</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+      <div class="ticker-badge badge-teal">
+        <div class="badge-icon"><i class="ph ph-medal"></i></div>
+        <span class="badge-number">%95</span>
+        <span class="badge-label">Müşteri Yenileme</span>
+        <span class="badge-check"><i class="ph-fill ph-check-circle"></i></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MOUNTAIN RAIN SCENE + FOOTER
+     ============================================================ -->
+<div class="mountain-scene" id="mountainScene">
+  <canvas id="rainCanvas"></canvas>
+  <div class="mountain-viewport" id="viewport">
+    <div class="sky-layer" id="skyBase"></div>
+    <div class="sky-layer" id="skyCold"></div>
+    <div class="sky-layer" id="skyHigh"></div>
+    <div class="mountain-layer mtn-back" id="mtnBack"><div class="mtn-shape"></div><div class="snow-cap" id="snowCap"></div></div>
+    <div class="mountain-layer mtn-mid" id="mtnMid"><div class="mtn-shape"></div></div>
+    <div class="mountain-layer mtn-front" id="mtnFront"><div class="mtn-shape"></div></div>
+    <div class="forest-layer" id="forest"></div>
+  </div>
+  <div class="mountain-dark-overlay" id="mtnDarkOverlay"></div>
+</div>
+
+<footer class="mega-footer" id="contact">
+  <div class="footer-inner">
+    <div class="footer-top-bar">
+      <div class="brand-area">
+        <div class="brand-logo"><span class="brand-dot"></span>ASTOR Tekstil</div>
+        <p class="brand-desc">Pamuktan modaya uzanan değer zincirinde, örme kumaş üretiminin güvenilir adresi. Kalite, inovasyon ve sürdürülebilirlikle geleceği dokuyoruz.</p>
+        <div class="social-row">
+          <a href="#" class="social-btn" aria-label="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+          <a href="#" class="social-btn" aria-label="WhatsApp"><i class="ph ph-whatsapp-logo"></i></a>
+          <a href="#" class="social-btn" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-columns">
+      <div class="footer-col">
+        <h3 class="col-title"><i class="ph ph-factory"></i> Üretim</h3>
+        <ul class="col-links">
+          <li><a href="#"><i class="ph ph-yarn"></i> Örme Tesisi</a></li>
+          <li><a href="#"><i class="ph ph-paint-bucket"></i> Boyahane</a></li>
+          <li><a href="#"><i class="ph ph-stamp"></i> Baskı Merkezi</a></li>
+          <li><a href="#"><i class="ph ph-test-tube"></i> Laboratuvar</a></li>
+          <li><a href="#"><i class="ph ph-gear"></i> Makine Parkuru</a></li>
+          <li><a href="#"><i class="ph ph-cube"></i> AR-GE Merkezi</a></li>
+          <li><a href="#"><i class="ph ph-recycle"></i> Atık Yönetimi</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="col-title"><i class="ph ph-swatches"></i> Ürünler</h3>
+        <ul class="col-links">
+          <li><a href="#"><i class="ph ph-circles-three"></i> Single Jersey</a></li>
+          <li><a href="#"><i class="ph ph-squares-four"></i> Interlock &amp; Rib</a></li>
+          <li><a href="#"><i class="ph ph-diamond"></i> Jacquard</a></li>
+          <li><a href="#"><i class="ph ph-cloud"></i> Flece &amp; Şardon</a></li>
+          <li><a href="#"><i class="ph ph-leaf"></i> Sürdürülebilir Koleksiyon</a></li>
+          <li><a href="#"><i class="ph ph-file-text"></i> Numune Talep Et</a></li>
+          <li><a href="#"><i class="ph ph-book-open"></i> Kumaş Kataloğu (PDF)</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="col-title"><i class="ph ph-buildings"></i> Kurumsal</h3>
+        <ul class="col-links">
+          <li><a href="#"><i class="ph ph-info"></i> Hakkımızda</a></li>
+          <li><a href="#"><i class="ph ph-flag-banner"></i> Misyon &amp; Vizyon</a></li>
+          <li><a href="#"><i class="ph ph-users-three"></i> Yönetim Kurulu</a></li>
+          <li><a href="#"><i class="ph ph-clock-countdown"></i> Tarihçe</a></li>
+          <li><a href="#"><i class="ph ph-handshake"></i> Referanslar</a></li>
+          <li><a href="#"><i class="ph ph-trophy"></i> Ödüller &amp; Başarılar</a></li>
+          <li><a href="#"><i class="ph ph-briefcase"></i> Kariyer</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="col-title"><i class="ph ph-chart-line-up"></i> Yatırımcı İlişkileri</h3>
+        <ul class="col-links">
+          <li><a href="#"><i class="ph ph-presentation-chart"></i> Faaliyet Raporları</a></li>
+          <li><a href="#"><i class="ph ph-chart-bar"></i> Finansal Tablolar</a></li>
+          <li><a href="#"><i class="ph ph-file-pdf"></i> Yıllık Rapor 2025</a></li>
+          <li><a href="#"><i class="ph ph-trend-up"></i> Büyüme Stratejisi</a></li>
+          <li><a href="#"><i class="ph ph-shield-check"></i> Kurumsal Yönetim</a></li>
+          <li><a href="#"><i class="ph ph-scales"></i> Etik &amp; Uyum</a></li>
+          <li><a href="#"><i class="ph ph-calendar-check"></i> Genel Kurul</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="col-title"><i class="ph ph-leaf"></i> Sürdürülebilirlik</h3>
+        <ul class="col-links">
+          <li><a href="#"><i class="ph ph-seal-check"></i> Sertifikalar</a></li>
+          <li><a href="#"><i class="ph ph-globe"></i> ESG Raporu</a></li>
+          <li><a href="#"><i class="ph ph-drop"></i> Su Yönetimi</a></li>
+          <li><a href="#"><i class="ph ph-lightning"></i> Enerji Verimliliği</a></li>
+          <li><a href="#"><i class="ph ph-tree"></i> Karbon Ayak İzi</a></li>
+          <li><a href="#"><i class="ph ph-recycle"></i> Döngüsel Ekonomi</a></li>
+          <li><a href="#"><i class="ph ph-file-text"></i> Sürdürülebilirlik Raporu</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="col-title"><i class="ph ph-megaphone"></i> Basın &amp; İletişim</h3>
+        <ul class="col-links">
+          <li><a href="#"><i class="ph ph-newspaper"></i> Basın Odası</a></li>
+          <li><a href="#"><i class="ph ph-article"></i> Blog &amp; Haberler</a></li>
+          <li><a href="#"><i class="ph ph-image"></i> Medya Galerisi</a></li>
+          <li><a href="#"><i class="ph ph-envelope"></i> info@astortekstil.com</a></li>
+          <li><a href="#"><i class="ph ph-phone-call"></i> +90 212 555 00 00</a></li>
+          <li><a href="#"><i class="ph ph-whatsapp-logo"></i> WhatsApp Hattı</a></li>
+          <li><a href="#"><i class="ph ph-map-pin"></i> İstanbul, Türkiye</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="glass-divider"></div>
+
+    <!-- Social Icons Row -->
+    <div class="footer-social-row">
+      <a href="#" class="footer-social-icon" aria-label="LinkedIn"><i class="ph-fill ph-linkedin-logo"></i></a>
+      <a href="#" class="footer-social-icon" aria-label="YouTube"><i class="ph-fill ph-youtube-logo"></i></a>
+      <a href="#" class="footer-social-icon" aria-label="Instagram"><i class="ph-fill ph-instagram-logo"></i></a>
+      <a href="#" class="footer-social-icon" aria-label="X (Twitter)"><i class="ph-fill ph-x-logo"></i></a>
+      <a href="#" class="footer-social-icon" aria-label="Facebook"><i class="ph-fill ph-facebook-logo"></i></a>
+      <a href="#" class="footer-social-icon" aria-label="Pinterest"><i class="ph-fill ph-pinterest-logo"></i></a>
+    </div>
+
+    <div class="glass-divider-2"></div>
+
+    <!-- Legal Row -->
+    <div class="footer-bottom">
+      <div class="bottom-links">
+        <a href="#">Gizlilik Politikası</a>
+        <a href="#">Kullanım Şartları</a>
+        <a href="#">KVKK Aydınlatma</a>
+        <a href="#">Çerez Politikası</a>
+      </div>
+      <p class="footer-copy">&copy; <span id="footerYear"></span> ASTOR Tekstil. Tüm hakları saklıdır. İzinsiz, basılı veya dijital herhangi bir alanda kullanılamaz.</p>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /.bg-section -->
+</div><!-- /main-content -->
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="assets/js/main.js"></script>
+</body>
+</html>

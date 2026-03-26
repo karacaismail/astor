@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astor Örme — Logo Sistemi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;200;300&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+/* ─── SYSTEM TOKENS ─────────────────────────────────────────
+   Stroke sistemi: 1px (ince) · 1.5px (standart)
+   Renk sistemi  : --ink (#0f0e0d) · --paper (#fafaf8) · --gold (#8b6510)
+   Tip sistemi   : Cormorant Garamond · Josefin Sans
+   WCAG AAA      : --ink on --paper = 18.6:1 · --paper on --ink = 18.6:1
+──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:    #0f0e0d;
+  --paper:  #fafaf8;
+  --mid:    #f0ede6;
+  --gold:   #8b6510;   /* dekoratif kullanım — küçük text'te değil */
+  --muted:  #666058;
+  --stroke: 1.5px;
+  --stroke-fine: 1px;
+}
+
+html { font-size: 16px; }
+body { background: var(--mid); font-family: 'Josefin Sans', sans-serif; color: var(--ink); }
+
+/* ─── HEADER ─────────────────────────────────────────────── */
+.site-header {
+  padding: 3rem 3rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  border-bottom: var(--stroke-fine) solid #d8d2c8;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.site-header h1 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.site-header p {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wcag-badge {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: var(--stroke-fine) solid #d8d2c8;
+  padding: 0.35rem 0.9rem;
+  border-radius: 4px;
+}
+
+/* ─── FILTER BAR ─────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 2rem 3rem 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 0.82rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.filter-btn:hover { color: var(--ink); }
+.filter-btn.active {
+  color: var(--ink);
+  font-weight: 700;
+  border-bottom-color: var(--ink);
+}
+
+/* ─── GRID ───────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 2.5rem 3rem 5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px)  { .grid { grid-template-columns: 1fr; } }
+
+/* ─── LOGO CARD ──────────────────────────────────────────── */
+.card {
+  border: var(--stroke-fine) solid #ddd7ce;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 2.5rem 3rem;
+  min-height: 270px;
+  position: relative;
+  transition: background 0.25s, box-shadow 0.3s, transform 0.3s;
+  cursor: default;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+.card svg {
+  transform: scale(1.35);
+  transform-origin: center center;
+}
+.card:hover { z-index: 2; }
+
+/* bg variants */
+.card.on-white  { background: #ffffff; }
+.card.on-paper  { background: var(--paper); }
+.card.on-ink    { background: var(--ink); }
+.card.on-deep   { background: #181614; }
+.card.on-mid    { background: #ede9e1; }
+.card.on-warm   { background: #f5f1e8; }
+.card.on-slate  { background: #22272e; }
+.card.on-stone  { background: #2c2820; }
+
+/* label */
+.card-label {
+  position: absolute;
+  bottom: 0.9rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.card.on-ink    .card-label,
+.card.on-deep   .card-label,
+.card.on-slate  .card-label,
+.card.on-stone  .card-label { color: rgba(255,255,255,0.3); }
+
+/* type indicator */
+.card-type {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  font-size: 0.63rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c8c0b4;
+}
+.card.on-ink    .card-type,
+.card.on-deep   .card-type,
+.card.on-slate  .card-type,
+.card.on-stone  .card-type { color: rgba(255,255,255,0.15); }
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Astor Örme</h1>
+  <p>Logo Sistemi · 24 Varyant</p>
+  <div class="wcag-badge">WCAG 2.2 AAA</div>
+</header>
+
+<nav class="filter-bar" role="navigation" aria-label="Logo kategorileri">
+  <button class="filter-btn active" data-f="all">Tümü</button>
+  <button class="filter-btn" data-f="wordmark">Wordmark</button>
+  <button class="filter-btn" data-f="mark">Mark</button>
+  <button class="filter-btn" data-f="monogram">Monogram</button>
+  <button class="filter-btn" data-f="emblem">Emblem</button>
+  <button class="filter-btn" data-f="dark">Koyu</button>
+</nav>
+
+<main class="grid" id="grid" role="main" aria-label="Logo alternatifleri">
+
+  <!-- ════════════════════════════════════════════════════════
+       WORDMARK — tipografik
+       ════════════════════════════════════════════════════════ -->
+
+  <!-- W1 · Klasik Wordmark -->
+  <div class="card on-white" data-t="wordmark" aria-label="Logo 1 — Klasik Wordmark">
+    <svg width="220" height="70" viewBox="0 0 220 70" role="img" aria-label="ASTOR ÖRME klasik wordmark">
+      <text x="110" y="36" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="30" font-weight="600"
+        letter-spacing="10" fill="#0f0e0d">ASTOR</text>
+      <line x1="36" y1="44" x2="184" y2="44" stroke="#0f0e0d" stroke-width="1"/>
+      <text x="110" y="58" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="7.5" font-weight="200"
+        letter-spacing="9" fill="#0f0e0d">ÖRME</text>
+    </svg>
+    <span class="card-label">W1</span>
+    <span class="card-type">Wordmark</span>
+  </div>
+
+  <!-- W2 · Ultra-Light Modern -->
+  <div class="card on-paper" data-t="wordmark" aria-label="Logo 2 — Ultra Light">
+    <svg width="220" height="70" viewBox="0 0 220 70" role="img" aria-label="ASTOR ÖRME ultra light">
+      <text x="110" y="34" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="14" font-weight="100"
+        letter-spacing="18" fill="#0f0e0d">ASTOR</text>
+      <text x="110" y="52" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="7.5" font-weight="100"
+        letter-spacing="18" fill="#8b6510">ÖRME</text>
+    </svg>
+    <span class="card-label">W2</span>
+    <span class="card-type">Wordmark</span>
+  </div>
+
+  <!-- W3 · Serif İtalik -->
+  <div class="card on-warm" data-t="wordmark" aria-label="Logo 3 — Serif İtalik">
+    <svg width="220" height="70" viewBox="0 0 220 70" role="img" aria-label="ASTOR ÖRME serif italic">
+      <text x="110" y="38" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="34" font-weight="300"
+        font-style="italic" letter-spacing="6" fill="#0f0e0d">Astor Örme</text>
+      <line x1="55" y1="48" x2="165" y2="48" stroke="#8b6510" stroke-width="1"/>
+    </svg>
+    <span class="card-label">W3</span>
+    <span class="card-type">Wordmark</span>
+  </div>
+
+  <!-- W4 · Simetrik Stacked -->
+  <div class="card on-ink" data-t="wordmark dark" aria-label="Logo 4 — Stacked Dark">
+    <svg width="220" height="70" viewBox="0 0 220 70" role="img" aria-label="ASTOR ÖRME stacked koyu">
+      <text x="110" y="32" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="11" font-weight="200"
+        letter-spacing="16" fill="#fafaf8">ASTOR</text>
+      <line x1="60" y1="40" x2="160" y2="40" stroke="#8b6510" stroke-width="1"/>
+      <text x="110" y="54" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="100"
+        letter-spacing="14" fill="#8b6510">ÖRME</text>
+    </svg>
+    <span class="card-label">W4</span>
+    <span class="card-type">Wordmark · Koyu</span>
+  </div>
+
+  <!-- W5 · Condensed Serif -->
+  <div class="card on-white" data-t="wordmark" aria-label="Logo 5 — Condensed Serif">
+    <svg width="220" height="80" viewBox="0 0 220 80" role="img" aria-label="ASTOR ÖRME condensed serif">
+      <text x="110" y="46" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="42" font-weight="400"
+        letter-spacing="8" fill="#0f0e0d">ASTOR</text>
+      <text x="110" y="64" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="13" font-weight="300"
+        letter-spacing="18" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">W5</span>
+    <span class="card-type">Wordmark</span>
+  </div>
+
+  <!-- W6 · Tek Satır Spacing -->
+  <div class="card on-mid" data-t="wordmark" aria-label="Logo 6 — Tek Satır">
+    <svg width="260" height="60" viewBox="0 0 260 60" role="img" aria-label="ASTOR ÖRME tek satır">
+      <text x="130" y="36" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="10" font-weight="200"
+        letter-spacing="14" fill="#0f0e0d">ASTOR  ÖRME</text>
+    </svg>
+    <span class="card-label">W6</span>
+    <span class="card-type">Wordmark</span>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       MARK + WORDMARK — geometrik
+       ════════════════════════════════════════════════════════ -->
+
+  <!-- M1 · Constructed A (3 çizgi) -->
+  <div class="card on-paper" data-t="mark" aria-label="Logo 7 — Mark A">
+    <svg width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Geometrik A mark ASTOR ÖRME">
+      <g transform="translate(18, 8)">
+        <!-- Constructed A: sol diyagonal, sağ diyagonal, çapraz -->
+        <line x1="22" y1="64" x2="37" y2="10" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+        <line x1="52" y1="64" x2="37" y2="10" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+        <line x1="28" y1="42" x2="46" y2="42" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+      </g>
+      <line x1="88" y1="12" x2="88" y2="72" stroke="#e0dbd2" stroke-width="1"/>
+      <text x="104" y="42" dominant-baseline="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="6" fill="#0f0e0d">ASTOR</text>
+      <text x="104" y="60"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="9" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">M1</span>
+    <span class="card-type">Mark</span>
+  </div>
+
+  <!-- M2 · İplik Döngüsü — iki yay -->
+  <div class="card on-white" data-t="mark" aria-label="Logo 8 — Thread Loop">
+    <svg width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="İplik döngüsü mark ASTOR ÖRME">
+      <g transform="translate(14, 8)">
+        <!-- Örgü ilmek: iki üst çeyrek daire + bağlantı çizgileri -->
+        <path d="M8,52 L8,30 Q8,10 28,10 Q48,10 48,30 L48,52"
+          fill="none" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="8" y1="52" x2="18" y2="52" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="38" y1="52" x2="48" y2="52" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- İç yay — örgü ikinci sıra -->
+        <path d="M18,52 L18,34 Q18,22 28,22 Q38,22 38,34 L38,52"
+          fill="none" stroke="#8b6510" stroke-width="1" stroke-linecap="round"/>
+      </g>
+      <line x1="80" y1="12" x2="80" y2="72" stroke="#e0dbd2" stroke-width="1"/>
+      <text x="96" y="42" dominant-baseline="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="6" fill="#0f0e0d">ASTOR</text>
+      <text x="96" y="60"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="9" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">M2</span>
+    <span class="card-type">Mark</span>
+  </div>
+
+  <!-- M3 · Chevron (V — knit stitch) -->
+  <div class="card on-deep" data-t="mark dark" aria-label="Logo 9 — Chevron Dark">
+    <svg width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Chevron mark ASTOR ÖRME koyu">
+      <g transform="translate(16, 12)">
+        <!-- Üç çift chevron — farklı boyutlarda, aynı stroke -->
+        <polyline points="8,50  20,20  32,50" fill="none" stroke="#fafaf8" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/>
+        <polyline points="8,60  20,30  32,60" fill="none" stroke="#8b6510" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter"/>
+      </g>
+      <line x1="66" y1="12" x2="66" y2="72" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <text x="82" y="42" dominant-baseline="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="6" fill="#fafaf8">ASTOR</text>
+      <text x="82" y="60"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="9" fill="#8b6510">ÖRME</text>
+    </svg>
+    <span class="card-label">M3</span>
+    <span class="card-type">Mark · Koyu</span>
+  </div>
+
+  <!-- M4 · Diamond Outline -->
+  <div class="card on-warm" data-t="mark" aria-label="Logo 10 — Diamond">
+    <svg width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Diamond mark ASTOR ÖRME">
+      <g transform="translate(14, 8)">
+        <polygon points="28,4  52,32  28,60  4,32"
+          fill="none" stroke="#0f0e0d" stroke-width="1.5"/>
+        <polygon points="28,14  42,32  28,50  14,32"
+          fill="none" stroke="#0f0e0d" stroke-width="1" opacity="0.25"/>
+        <!-- Merkez nokta -->
+        <circle cx="28" cy="32" r="2.5" fill="#8b6510"/>
+      </g>
+      <line x1="76" y1="12" x2="76" y2="72" stroke="#d8d2c8" stroke-width="1"/>
+      <text x="92" y="42" dominant-baseline="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="6" fill="#0f0e0d">ASTOR</text>
+      <text x="92" y="60"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="9" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">M4</span>
+    <span class="card-type">Mark</span>
+  </div>
+
+  <!-- M5 · Grid 2×2 (dokuma) -->
+  <div class="card on-white" data-t="mark" aria-label="Logo 11 — Dokuma Grid">
+    <svg width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Dokuma grid mark ASTOR ÖRME">
+      <g transform="translate(16, 16)">
+        <!-- 2×2 dokuma: çapraz dolu/boş -->
+        <rect x="0"  y="0"  width="20" height="20" fill="#0f0e0d"/>
+        <rect x="22" y="0"  width="20" height="20" fill="none" stroke="#0f0e0d" stroke-width="1.5"/>
+        <rect x="0"  y="22" width="20" height="20" fill="none" stroke="#0f0e0d" stroke-width="1.5"/>
+        <rect x="22" y="22" width="20" height="20" fill="#0f0e0d"/>
+      </g>
+      <line x1="80" y1="12" x2="80" y2="72" stroke="#e0dbd2" stroke-width="1"/>
+      <text x="96" y="42" dominant-baseline="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="6" fill="#0f0e0d">ASTOR</text>
+      <text x="96" y="60"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="9" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">M5</span>
+    <span class="card-type">Mark</span>
+  </div>
+
+  <!-- M6 · Thin Circle Hallmark -->
+  <div class="card on-slate" data-t="mark dark" aria-label="Logo 12 — Hallmark Koyu">
+    <svg width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Hallmark circle ASTOR ÖRME koyu">
+      <g transform="translate(14, 8)">
+        <circle cx="32" cy="32" r="28" fill="none" stroke="#fafaf8" stroke-width="1.5"/>
+        <circle cx="32" cy="32" r="22" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <text x="32" y="37" text-anchor="middle"
+          font-family="'Cormorant Garamond',serif" font-size="22" font-weight="600"
+          fill="#fafaf8">A</text>
+      </g>
+      <line x1="78" y1="12" x2="78" y2="72" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="94" y="42" dominant-baseline="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="6" fill="#fafaf8">ASTOR</text>
+      <text x="94" y="60"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="9" fill="#8b6510">ÖRME</text>
+    </svg>
+    <span class="card-label">M6</span>
+    <span class="card-type">Mark · Koyu</span>
+  </div>
+
+  <!-- M7 · Horizontal Line Pair (fabric roll) -->
+  <div class="card on-paper" data-t="mark" aria-label="Logo 13 — Fabric Roll">
+    <svg width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Fabric roll mark ASTOR ÖRME">
+      <g transform="translate(14, 24)">
+        <!-- İki yatay çizgi: hafif bükülmüş — kumaş rulosu -->
+        <path d="M0,10 Q28,6 56,10" fill="none" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M0,22 Q28,18 56,22" fill="none" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Bağ çizgileri (sol–sağ kapak) -->
+        <line x1="0" y1="10" x2="0" y2="22" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="56" y1="10" x2="56" y2="22" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <line x1="84" y1="12" x2="84" y2="72" stroke="#e0dbd2" stroke-width="1"/>
+      <text x="100" y="42" dominant-baseline="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="6" fill="#0f0e0d">ASTOR</text>
+      <text x="100" y="60"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="9" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">M7</span>
+    <span class="card-type">Mark</span>
+  </div>
+
+  <!-- M8 · İki Paralel Çizgi + A -->
+  <div class="card on-mid" data-t="mark" aria-label="Logo 14 — Parallel Lines">
+    <svg width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Çift çizgi mark ASTOR ÖRME">
+      <g transform="translate(16, 14)">
+        <!-- Sol dikey çift çizgi — simetrik -->
+        <line x1="0"  y1="4"  x2="0"  y2="56" stroke="#0f0e0d" stroke-width="1.5"/>
+        <line x1="10" y1="4"  x2="10" y2="56" stroke="#8b6510" stroke-width="1"/>
+        <line x1="20" y1="4"  x2="20" y2="56" stroke="#0f0e0d" stroke-width="1.5"/>
+        <!-- Yatay bağlantı üst ve alt -->
+        <line x1="0" y1="4"  x2="20" y2="4"  stroke="#0f0e0d" stroke-width="1.5"/>
+        <line x1="0" y1="56" x2="20" y2="56" stroke="#0f0e0d" stroke-width="1.5"/>
+      </g>
+      <line x1="54" y1="12" x2="54" y2="72" stroke="#d0cbc3" stroke-width="1"/>
+      <text x="70" y="42" dominant-baseline="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="6" fill="#0f0e0d">ASTOR</text>
+      <text x="70" y="60"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="9" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">M8</span>
+    <span class="card-type">Mark</span>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       MONOGRAM
+       ════════════════════════════════════════════════════════ -->
+
+  <!-- MG1 · Büyük A — tek başına -->
+  <div class="card on-stone" data-t="monogram dark" aria-label="Logo 15 — Büyük A Monogram">
+    <svg width="180" height="120" viewBox="0 0 180 120" role="img" aria-label="Büyük A monogram koyu">
+      <text x="90" y="94" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="100" font-weight="300"
+        font-style="italic" fill="#fafaf8">A</text>
+      <text x="90" y="113" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="6.5" font-weight="100"
+        letter-spacing="12" fill="#8b6510">ASTOR ÖRME</text>
+    </svg>
+    <span class="card-label">MG1</span>
+    <span class="card-type">Monogram</span>
+  </div>
+
+  <!-- MG2 · AO Monogram overlap -->
+  <div class="card on-white" data-t="monogram" aria-label="Logo 16 — AO Monogram">
+    <svg width="180" height="120" viewBox="0 0 180 120" role="img" aria-label="AO monogram">
+      <!-- A ve O örtüşen Cormorant Garamond -->
+      <text x="70" y="84" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="80" font-weight="600"
+        fill="#0f0e0d">A</text>
+      <text x="112" y="84" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="80" font-weight="300"
+        fill="#0f0e0d" opacity="0.18">O</text>
+      <!-- Thin rule -->
+      <line x1="40" y1="94" x2="140" y2="94" stroke="#0f0e0d" stroke-width="1"/>
+      <text x="90" y="108" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="6.5" font-weight="100"
+        letter-spacing="10" fill="#666058">ASTOR ÖRME</text>
+    </svg>
+    <span class="card-label">MG2</span>
+    <span class="card-type">Monogram</span>
+  </div>
+
+  <!-- MG3 · A monogram geometrik, line -->
+  <div class="card on-paper" data-t="monogram" aria-label="Logo 17 — A Geometrik Monogram">
+    <svg width="160" height="120" viewBox="0 0 160 120" role="img" aria-label="A geometrik monogram">
+      <!-- Constructed A büyük, temiz -->
+      <line x1="50" y1="90" x2="80" y2="18" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+      <line x1="110" y1="90" x2="80" y2="18" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+      <line x1="62" y1="60" x2="98" y2="60" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+      <!-- Gold rule alt -->
+      <line x1="30" y1="100" x2="130" y2="100" stroke="#8b6510" stroke-width="1"/>
+      <text x="80" y="114" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="6.5" font-weight="100"
+        letter-spacing="10" fill="#666058">ASTOR</text>
+    </svg>
+    <span class="card-label">MG3</span>
+    <span class="card-type">Monogram</span>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       EMBLEM
+       ════════════════════════════════════════════════════════ -->
+
+  <!-- E1 · Dikdörtgen Çerçeve Emblem -->
+  <div class="card on-mid" data-t="emblem" aria-label="Logo 18 — Dikdörtgen Emblem">
+    <svg width="200" height="90" viewBox="0 0 200 90" role="img" aria-label="Dikdörtgen emblem ASTOR ÖRME">
+      <rect x="4" y="4" width="192" height="82" fill="none" stroke="#0f0e0d" stroke-width="1.5"/>
+      <text x="100" y="38" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="8" fill="#0f0e0d">ASTOR</text>
+      <line x1="30" y1="46" x2="170" y2="46" stroke="#0f0e0d" stroke-width="1"/>
+      <text x="100" y="60" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="10" fill="#666058">ÖRME</text>
+      <text x="100" y="74" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="5.5" font-weight="100"
+        letter-spacing="8" fill="#8b6510">TURKİYE</text>
+    </svg>
+    <span class="card-label">E1</span>
+    <span class="card-type">Emblem</span>
+  </div>
+
+  <!-- E2 · Köşe Marker Emblem (border kırık) -->
+  <div class="card on-white" data-t="emblem" aria-label="Logo 19 — Köşe Marker">
+    <svg width="200" height="90" viewBox="0 0 200 90" role="img" aria-label="Köşe marker emblem ASTOR ÖRME">
+      <!-- Sadece köşeler — açık kare -->
+      <polyline points="4,24  4,4  24,4"    fill="none" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+      <polyline points="176,4  196,4  196,24"  fill="none" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+      <polyline points="4,66  4,86  24,86"   fill="none" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+      <polyline points="176,86 196,86 196,66" fill="none" stroke="#0f0e0d" stroke-width="1.5" stroke-linecap="square"/>
+      <!-- İçerik -->
+      <text x="100" y="38" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="24" font-weight="600"
+        letter-spacing="8" fill="#0f0e0d">ASTOR</text>
+      <line x1="40" y1="46" x2="160" y2="46" stroke="#8b6510" stroke-width="1"/>
+      <text x="100" y="60" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="10" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">E2</span>
+    <span class="card-type">Emblem</span>
+  </div>
+
+  <!-- E3 · Dairesel Mühür -->
+  <div class="card on-paper" data-t="emblem" aria-label="Logo 20 — Dairesel Mühür">
+    <svg width="130" height="130" viewBox="0 0 130 130" role="img" aria-label="Dairesel mühür ASTOR ÖRME">
+      <defs>
+        <path id="arc1" d="M65,65 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"/>
+      </defs>
+      <circle cx="65" cy="65" r="58" fill="none" stroke="#0f0e0d" stroke-width="1.5"/>
+      <circle cx="65" cy="65" r="50" fill="none" stroke="#0f0e0d" stroke-width="1" opacity="0.15"/>
+      <text font-family="'Josefin Sans',sans-serif" font-size="6.5" font-weight="200"
+        letter-spacing="7.5" fill="#0f0e0d">
+        <textPath href="#arc1" startOffset="4%">ASTOR ÖRME · TURKİYE · EST 1985</textPath>
+      </text>
+      <text x="65" y="60" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="32" font-weight="600"
+        fill="#0f0e0d">A</text>
+      <line x1="40" y1="70" x2="90" y2="70" stroke="#8b6510" stroke-width="1"/>
+      <text x="65" y="84" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="6.5" font-weight="200"
+        letter-spacing="5" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">E3</span>
+    <span class="card-type">Emblem</span>
+  </div>
+
+  <!-- E4 · Dikey Emblem (giyim etiketi formatı) -->
+  <div class="card on-ink" data-t="emblem dark" aria-label="Logo 21 — Giyim Etiketi">
+    <svg width="100" height="140" viewBox="0 0 100 140" role="img" aria-label="Giyim etiketi ASTOR ÖRME koyu">
+      <rect x="4" y="4" width="92" height="132" fill="none" stroke="#fafaf8" stroke-width="1.5"/>
+      <!-- Delik (iplik deliği) -->
+      <circle cx="50" cy="22" r="5" fill="none" stroke="#fafaf8" stroke-width="1.5"/>
+      <line x1="50" y1="4" x2="50" y2="17" stroke="#fafaf8" stroke-width="1.5"/>
+      <!-- İçerik -->
+      <text x="50" y="68" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="38" font-weight="300"
+        font-style="italic" fill="#fafaf8">A</text>
+      <line x1="18" y1="80" x2="82" y2="80" stroke="#8b6510" stroke-width="1"/>
+      <text x="50" y="96" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="7" font-weight="200"
+        letter-spacing="7" fill="#fafaf8">ASTOR</text>
+      <text x="50" y="112" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="6" font-weight="100"
+        letter-spacing="6" fill="#8b6510">ÖRME</text>
+      <text x="50" y="126" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="5" font-weight="100"
+        letter-spacing="5" fill="rgba(255,255,255,0.3)">TURKİYE</text>
+    </svg>
+    <span class="card-label">E4</span>
+    <span class="card-type">Emblem · Koyu</span>
+  </div>
+
+  <!-- E5 · Editorial (büyük A sol, küçük metin sağ) -->
+  <div class="card on-warm" data-t="emblem" aria-label="Logo 22 — Editorial">
+    <svg width="240" height="100" viewBox="0 0 240 100" role="img" aria-label="Editorial format ASTOR ÖRME">
+      <!-- Büyük A sol -->
+      <text x="14" y="90"
+        font-family="'Cormorant Garamond',serif" font-size="90" font-weight="300"
+        fill="#0f0e0d" opacity="0.08">A</text>
+      <text x="14" y="90"
+        font-family="'Cormorant Garamond',serif" font-size="90" font-weight="300"
+        fill="none" stroke="#0f0e0d" stroke-width="1" opacity="0.6">A</text>
+      <!-- Sağ sütun metin -->
+      <line x1="80" y1="20" x2="80" y2="85" stroke="#d8d2c8" stroke-width="1"/>
+      <text x="96" y="50"
+        font-family="'Cormorant Garamond',serif" font-size="26" font-weight="600"
+        letter-spacing="5" fill="#0f0e0d">ASTOR</text>
+      <text x="96" y="68"
+        font-family="'Josefin Sans',sans-serif" font-size="7.5" font-weight="200"
+        letter-spacing="10" fill="#666058">ÖRME</text>
+    </svg>
+    <span class="card-label">E5</span>
+    <span class="card-type">Editorial</span>
+  </div>
+
+  <!-- E6 · Dikey Wordmark + Horizontal Rule Sistemi -->
+  <div class="card on-white" data-t="emblem wordmark" aria-label="Logo 23 — Rule Sistemi">
+    <svg width="220" height="90" viewBox="0 0 220 90" role="img" aria-label="Rule sistemi ASTOR ÖRME">
+      <line x1="18" y1="20" x2="202" y2="20" stroke="#0f0e0d" stroke-width="1.5"/>
+      <text x="110" y="48" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="26" font-weight="600"
+        letter-spacing="10" fill="#0f0e0d">ASTOR</text>
+      <text x="110" y="64" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="7.5" font-weight="100"
+        letter-spacing="14" fill="#666058">ÖRME</text>
+      <line x1="18" y1="72" x2="202" y2="72" stroke="#0f0e0d" stroke-width="1.5"/>
+    </svg>
+    <span class="card-label">E6</span>
+    <span class="card-type">Rule Sistemi</span>
+  </div>
+
+  <!-- E7 · Dark Diamond Emblem standalone -->
+  <div class="card on-deep" data-t="emblem dark monogram" aria-label="Logo 24 — Diamond Emblem Koyu">
+    <svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="Diamond emblem koyu monogram">
+      <polygon points="70,8  132,70  70,132  8,70"
+        fill="none" stroke="#fafaf8" stroke-width="1.5"/>
+      <polygon points="70,22  118,70  70,118  22,70"
+        fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <!-- Yatay çizgi içinde -->
+      <line x1="28" y1="70" x2="112" y2="70" stroke="#8b6510" stroke-width="1"/>
+      <text x="70" y="64" text-anchor="middle"
+        font-family="'Cormorant Garamond',serif" font-size="22" font-weight="600"
+        letter-spacing="3" fill="#fafaf8">ASTOR</text>
+      <text x="70" y="82" text-anchor="middle"
+        font-family="'Josefin Sans',sans-serif" font-size="6.5" font-weight="100"
+        letter-spacing="7" fill="#8b6510">ÖRME</text>
+    </svg>
+    <span class="card-label">E7</span>
+    <span class="card-type">Emblem · Koyu</span>
+  </div>
+
+</main>
+
+<script>
+  /* ─── Entrance animation — tek geçiş, stagger ── */
+  gsap.set(".card", { opacity: 0, y: 16 });
+  gsap.to(".card", {
+    opacity: 1, y: 0,
+    duration: 0.5,
+    stagger: 0.04,
+    ease: "power2.out",
+    delay: 0.1
+  });
+
+  /* ─── Filter ─────────────────────────────────── */
+  const btns  = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".card");
+
+  btns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      btns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const f = btn.dataset.f;
+      cards.forEach(card => {
+        const tags = card.dataset.t || "";
+        const show = f === "all" || tags.split(" ").includes(f);
+        gsap.to(card, {
+          opacity: show ? 1 : 0,
+          y: show ? 0 : 8,
+          duration: 0.25,
+          ease: "power1.out",
+          onStart: () => { if (show) card.style.display = "flex"; },
+          onComplete: () => { if (!show) card.style.display = "none"; }
+        });
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
